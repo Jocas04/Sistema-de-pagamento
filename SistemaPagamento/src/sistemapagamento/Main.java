@@ -78,6 +78,19 @@ abstract class Colaborador {
         colaboradores.add(new Colaboradorproducao(
         "003", "Evandro", 3000, 100, 7));
         System.out.println("Colaboradores Registrados");
+        for(Colaborador c : colaboradores) {
+            System.out.println(c.getMatricula() + " | "
+                               + c.getNome()+ " | "
+                                + c.getTipo());
+        }
+        System.out.println("Folha de Pagamento");
+        double totalFolha = 0;
+        for(Colaborador c : colaboradores) {
+            double salarioFinal = c.calcularSalario();
+            System.out.printf("%s | %s | %s | R$ %.2f%n",
+                                c.getMatricula(), c.getNome(), c.getTipo(), salarioFinal);
+            totalFolha += salarioFinal;
+        }
         
     }
     }
