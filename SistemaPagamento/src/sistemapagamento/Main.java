@@ -1,17 +1,22 @@
 package sistemapagamento;
-import java.util.ArrayList;
+import java.util.ArrayList; //usado para armazenar os colaboradores
 
+// a classe abstrata vai servir como classe pai para os tipos de colaboradores
 abstract class Colaborador {
+    //Dados obrigatórios dos colaboradores
     String matricula;
     String nome;
     double salarioBase;
-
+    
+    //construtor da classe , sempre que um colaborador é criado executa esse comando
    public Colaborador(String matricula, String nome, double salarioBase) {
+       //guarda os valores
    this.matricula = matricula;
    this.nome = nome;
    this.salarioBase = salarioBase;
    }
 
+   //
    public abstract double calcularSalario();
 
    public String getMatricula() {
@@ -31,13 +36,9 @@ abstract class Colaborador {
     public Colaboradorpadrao(String matricula, String nome, double salarioBase) {
     super(matricula, nome, salarioBase);
     }
-    public double calcularSalario(double salarioBase) {
-        return salarioBase;
-    }
-
     @Override
     public double calcularSalario() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return salarioBase;
     }
     }
     class Colaboradorcomissionado extends Colaborador {
@@ -91,7 +92,9 @@ abstract class Colaborador {
                                 c.getMatricula(), c.getNome(), c.getTipo(), salarioFinal);
             totalFolha += salarioFinal;
         }
-        
+        System.out.println("Resumo da Folha de Pagamento");
+        System.out.println("Quantidade de Colaboradores " + colaboradores.size());
+        System.out.printf("Total da Folha: R$ %.2f%n", totalFolha);
     }
     }
     
