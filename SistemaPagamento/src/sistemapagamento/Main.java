@@ -16,43 +16,55 @@ abstract class Colaborador {
    this.salarioBase = salarioBase;
    }
 
-   //
+   //método abstrato, cada classe filha irá ter que criar seu próprio calcular salario
    public abstract double calcularSalario();
-
+//retorna a matrícula
    public String getMatricula() {
    return matricula;
    }
+   //retorna o nome
    public String getNome() {
    return nome;
    }
+   //retorna o salario base
    public double getSalarioBase() {
    return salarioBase;
    }
+   //retorna o tipo do colaborador
    public String getTipo() {
    return this.getClass().getSimpleName();
    }
    }
+//colaborador padrao recebe só o salario base
     class Colaboradorpadrao extends Colaborador {
-    public Colaboradorpadrao(String matricula, String nome, double salarioBase) {
-    super(matricula, nome, salarioBase);
+    public Colaboradorpadrao(String matricula, String nome, double salarioBase) //construtor
+    {
+    super(matricula, nome, salarioBase); //chama o construtor
     }
     @Override
+    //retorna o salario base
     public double calcularSalario() {
         return salarioBase;
     }
     }
+//colaborador comissionado recebe salario base + comissao
     class Colaboradorcomissionado extends Colaborador {
-    private double valorVendas;
-    private double percentualComissao;
-    public Colaboradorcomissionado(String matricula, String nome, double salarioBase, double valorVendas, double percentualComissao) {
-    super(matricula, nome, salarioBase);
+    private double valorVendas; //total vendido
+    private double percentualComissao; //percentual de comissao por venda
+    public Colaboradorcomissionado(String matricula, String nome, double salarioBase, 
+    /* Construtor */               double valorVendas, double percentualComissao) {
+    super(matricula, nome, salarioBase); //chama o construtor
+    //inicializa total vendido e percentual de comissao
     this.valorVendas = valorVendas;
     this.percentualComissao = percentualComissao;
     }
+    //calcula o salario 
+    //comissao = vendas x percentual
+    //salario = salario base + comissao
     @Override
     public double calcularSalario() {
-        double comissao = valorVendas * percentualComissao;
-        return salarioBase + comissao;
+        double comissao = valorVendas * percentualComissao; //calcula a comissao
+        return salarioBase + comissao; //retorna o salario final
     }
     }
     class Colaboradorproducao extends Colaborador {
