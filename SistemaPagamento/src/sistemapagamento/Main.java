@@ -39,7 +39,7 @@ abstract class Colaborador {
     class Colaboradorpadrao extends Colaborador {
     public Colaboradorpadrao(String matricula, String nome, double salarioBase) //construtor
     {
-    super(matricula, nome, salarioBase); //chama o construtor
+    super(matricula, nome, salarioBase); //chama a classe pai
     }
     @Override
     //retorna o salario base
@@ -53,7 +53,7 @@ abstract class Colaborador {
     private double percentualComissao; //percentual de comissao por venda
     public Colaboradorcomissionado(String matricula, String nome, double salarioBase, 
     /* Construtor */               double valorVendas, double percentualComissao) {
-    super(matricula, nome, salarioBase); //chama o construtor
+    super(matricula, nome, salarioBase); //chama a c;asse pai
     //inicializa total vendido e percentual de comissao
     this.valorVendas = valorVendas;
     this.percentualComissao = percentualComissao;
@@ -67,40 +67,50 @@ abstract class Colaborador {
         return salarioBase + comissao; //retorna o salario final
     }
     }
+//Esse colaborador recebe por producao
     class Colaboradorproducao extends Colaborador {
-    private int quantidadeProduzida;
-    private double valorUnidade;
-    public Colaboradorproducao(String matricula, String nome, double salarioBase, int quantidadeProduzida, double valorporUnidade) {
-    super (matricula, nome, salarioBase);
-    this.quantidadeProduzida = quantidadeProduzida;
+    private int quantidadeProduzida; //quantidade produzida
+    private double valorUnidade; //valor pago por unidade  produzida
+    public Colaboradorproducao(String matricula, String nome, double salarioBase,
+                                int quantidadeProduzida, double valorporUnidade) {
+    super (matricula, nome, salarioBase); //chama a classe pai
+    //inicializa atributos
+    this.quantidadeProduzida = quantidadeProduzida; 
     this.valorUnidade = valorUnidade;
 }
+    //fórmula - produtividade = quantidade x valor por unidade
+    //salário= salário base + produtividade
     @Override
     public double calcularSalario() {
-    double produtividade = quantidadeProduzida * valorUnidade;
-    return salarioBase + produtividade;
+    double produtividade = quantidadeProduzida * valorUnidade; //calcula produtividade
+    return salarioBase + produtividade; //calcula salário final
 }
-}
-    public class Main{   
+}//classe principal
+public class Main{   
     public static void main(String[] args) {
+        //cria lista que armazena qualquer tipo de colaborador
         ArrayList<Colaborador> colaboradores = new ArrayList<>();
+        //cadastra colaborador padrao
         colaboradores.add(new Colaboradorpadrao(
         "001","Dorival", 3000));
+        //cadastra colaborador comissionado
         colaboradores.add(new Colaboradorcomissionado(
         "002","Arlindo", 3000, 20000, 0.10));
+        //cadastra colaborador por producao
         colaboradores.add(new Colaboradorproducao(
         "003", "Evandro", 3000, 100, 7));
+        //exibe todos os colaboradores cadastrados
         System.out.println("Colaboradores Registrados");
         for(Colaborador c : colaboradores) {
             System.out.println(c.getMatricula() + " | "
                                + c.getNome()+ " | "
                                 + c.getTipo());
         }
-        System.out.println("Folha de Pagamento");
-        double totalFolha = 0;
-        for(Colaborador c : colaboradores) {
-            double salarioFinal = c.calcularSalario();
-            System.out.printf("%s | %s | %s | R$ %.2f%n",
+        System.out.println("Folha de Pagamento");   //exibe folha de pagamento
+        double totalFolha = 0; //variavel responsavel por somar salarios
+        for(Colaborador c : colaboradores) {    //percorre todos os colaboradores
+            double salarioFinal = c.calcularSalario(); //chama o calculo de salario certo pra cada colaborador 
+            System.out.printf("%s | %s | %s | R$ %.2f%n", //mnostra os dados do colaborador
                                 c.getMatricula(), c.getNome(), c.getTipo(), salarioFinal);
             totalFolha += salarioFinal;
         }
