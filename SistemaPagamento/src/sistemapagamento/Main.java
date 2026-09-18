@@ -1,5 +1,6 @@
 package sistemapagamento;
 import java.util.ArrayList; //usado para armazenar os colaboradores
+import java.util.Scanner; //usado para o menu
 
 // a classe abstrata vai servir como classe pai para os tipos de colaboradores
 abstract class Colaborador {
@@ -88,6 +89,40 @@ abstract class Colaborador {
 }//classe principal
 public class Main{   
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int opcao;
+        do{
+            System.out.println("MENU ");
+            System.out.println("1 - Cadastrar Colaborador");
+            System.out.println("2 - Listar Colaboradores");
+            System.out.println("3 - Gerar folha de pagamento");
+            System.out.println("4 - Resumo da folha de pagamento");
+            System.out.println("0 - Sair");
+            System.out.println("Insira um número: ");
+            opcao = sc.nextInt();
+            
+            switch(opcao) {
+                case 1: 
+                    System.out.println("1 - Padrao");
+                    System.out.println("2 - Comissionado");
+                    System.out.println("3 - Producao");
+                    int tipo = sc.nextInt();
+                    sc.nextLine();
+                    System.out.println("Matricula: ");
+                    String matricula = sc.nextLine();
+                    System.out.println("Nome: ");
+                    String nome= sc.nextLine();
+                    System.out.println("Salário Base: ");
+                    double salariobase= sc.nextDouble();
+                    
+                case 2: break;
+                case 3: break;
+                case 4: break;
+                case 0: System.out.println("Encerrando");
+                deafault: System.out.println("INVÁLIDO");
+            }          
+        } while (opcao!=0);
+        
         //cria lista que armazena qualquer tipo de colaborador
         ArrayList<Colaborador> colaboradores = new ArrayList<>();
         //cadastra colaborador padrao
