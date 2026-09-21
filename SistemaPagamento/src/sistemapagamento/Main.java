@@ -91,6 +91,8 @@ public class Main{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int opcao;
+           //cria lista que armazena qualquer tipo de colaborador
+        ArrayList<Colaborador> colaboradores = new ArrayList<>();
         do{
             System.out.println("MENU ");
             System.out.println("1 - Cadastrar Colaborador");
@@ -114,8 +116,32 @@ public class Main{
                     String nome= sc.nextLine();
                     System.out.println("Salário Base: ");
                     double salariobase= sc.nextDouble();
-                    
-                case 2: break;
+                    if(tipo == 1) {
+                        colaboradores.add(new Colaboradorpadrao(matricula, nome, salariobase));
+                        System.out.println("Cadastrado!");
+                    }
+                    if(tipo == 2) {
+                        System.out.println("Valor das Vendas: ");
+                        double vendas = sc.nextDouble();
+                        System.out.println("Percentual de Comissao: ");
+                        double comissao= sc.nextDouble();
+                        colaboradores.add(new Colaboradorcomissionado(matricula, nome, salariobase, vendas, comissao));
+                        System.out.println("Cadastrado!");
+                    }
+                    if(tipo == 3) {
+                        System.out.println("Quantidade Produzida: ");
+                        int quantidade = sc.nextInt();
+                        System.out.println("Valor por Unidade: ");
+                        double valor = sc.nextDouble();
+                        colaboradores.add(new Colaboradorproducao(matricula, nome, salariobase, quantidade, valor));
+                        System.out.println("Cadastrado!");
+                    }
+                    break;
+                case 2: System.out.println("Colaboradores Registrados");
+        for(Colaborador c : colaboradores) {
+            System.out.println(c.getMatricula() + " | " + c.getNome()+ " | " + c.getTipo());
+               }
+                    break;
                 case 3: break;
                 case 4: break;
                 case 0: System.out.println("Encerrando");
@@ -123,8 +149,7 @@ public class Main{
             }          
         } while (opcao!=0);
         
-        //cria lista que armazena qualquer tipo de colaborador
-        ArrayList<Colaborador> colaboradores = new ArrayList<>();
+     
         //cadastra colaborador padrao
         colaboradores.add(new Colaboradorpadrao(
         "001","Dorival", 3000));
@@ -135,12 +160,7 @@ public class Main{
         colaboradores.add(new Colaboradorproducao(
         "003", "Evandro", 3000, 100, 7));
         //exibe todos os colaboradores cadastrados
-        System.out.println("Colaboradores Registrados");
-        for(Colaborador c : colaboradores) {
-            System.out.println(c.getMatricula() + " | "
-                               + c.getNome()+ " | "
-                                + c.getTipo());
-        }
+        
         System.out.println("Folha de Pagamento");   //exibe folha de pagamento
         double totalFolha = 0; //variavel responsavel por somar salarios
         for(Colaborador c : colaboradores) {    //percorre todos os colaboradores
