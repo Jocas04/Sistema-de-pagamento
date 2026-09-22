@@ -120,7 +120,7 @@ public class Main{
                         colaboradores.add(new Colaboradorpadrao(matricula, nome, salariobase));
                         System.out.println("Cadastrado!");
                     }
-                    if(tipo == 2) {
+                    else if(tipo == 2) {
                         System.out.println("Valor das Vendas: ");
                         double vendas = sc.nextDouble();
                         System.out.println("Percentual de Comissao: ");
@@ -128,7 +128,7 @@ public class Main{
                         colaboradores.add(new Colaboradorcomissionado(matricula, nome, salariobase, vendas, comissao));
                         System.out.println("Cadastrado!");
                     }
-                    if(tipo == 3) {
+                    else if(tipo == 3) {
                         System.out.println("Quantidade Produzida: ");
                         int quantidade = sc.nextInt();
                         System.out.println("Valor por Unidade: ");
@@ -136,42 +136,36 @@ public class Main{
                         colaboradores.add(new Colaboradorproducao(matricula, nome, salariobase, quantidade, valor));
                         System.out.println("Cadastrado!");
                     }
+                    else { 
+                        System.out.println("Tipo Invalido");
+                    }
                     break;
                 case 2: System.out.println("Colaboradores Registrados");
-        for(Colaborador c : colaboradores) {
-            System.out.println(c.getMatricula() + " | " + c.getNome()+ " | " + c.getTipo());
-               }
+                for(Colaborador c : colaboradores) {
+                System.out.println(c.getMatricula() + " | " + c.getNome()+ " | " + c.getTipo());
+                   }
                     break;
-                case 3: break;
-                case 4: break;
+                case 3: double totalfolha= 0; //variavel responsavel por somar salarios
+                    System.out.println("FOLHA DE PAGAMENTO"); //exibe folha de pagamento
+                    for(Colaborador c : colaboradores) { //percorre todos os colaboradores
+                        double salarioFinal = c.calcularSalario(); //chama o calculo de salario certo pra cada colaborador 
+                        System.out.printf( "%s | %s | %s | R$ %.2f%n", //mostra os dados do colaborador
+                        c.getMatricula(), c.getNome(), c.getTipo(), salarioFinal);                        
+                        totalfolha += salarioFinal;
+                    }
+                break;
+                case 4: double total = 0;
+                    for(Colaborador c : colaboradores) {
+                        total += c.calcularSalario();
+                    }
+                    System.out.println("Quantidade de Colaboradores: " + colaboradores.size());
+                    System.out.printf("Total da Folha: R$ %.2f%n", total);
+                    break;
                 case 0: System.out.println("Encerrando");
-                deafault: System.out.println("INVÁLIDO");
+                default: System.out.println("INVÁLIDO");
             }          
         } while (opcao!=0);
-        
-     
-        //cadastra colaborador padrao
-        colaboradores.add(new Colaboradorpadrao(
-        "001","Dorival", 3000));
-        //cadastra colaborador comissionado
-        colaboradores.add(new Colaboradorcomissionado(
-        "002","Arlindo", 3000, 20000, 0.10));
-        //cadastra colaborador por producao
-        colaboradores.add(new Colaboradorproducao(
-        "003", "Evandro", 3000, 100, 7));
-        //exibe todos os colaboradores cadastrados
-        
-        System.out.println("Folha de Pagamento");   //exibe folha de pagamento
-        double totalFolha = 0; //variavel responsavel por somar salarios
-        for(Colaborador c : colaboradores) {    //percorre todos os colaboradores
-            double salarioFinal = c.calcularSalario(); //chama o calculo de salario certo pra cada colaborador 
-            System.out.printf("%s | %s | %s | R$ %.2f%n", //mnostra os dados do colaborador
-                                c.getMatricula(), c.getNome(), c.getTipo(), salarioFinal);
-            totalFolha += salarioFinal;
-        }
-        System.out.println("Resumo da Folha de Pagamento");
-        System.out.println("Quantidade de Colaboradores " + colaboradores.size());
-        System.out.printf("Total da Folha: R$ %.2f%n", totalFolha);
+        sc.close();
     }
     }
     
