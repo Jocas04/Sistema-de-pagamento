@@ -145,12 +145,13 @@ public class Main{
                 System.out.println(c.getMatricula() + " | " + c.getNome()+ " | " + c.getTipo());
                    }
                     break;
-                case 3: double totalfolha= 0; //variavel responsavel por somar salarios
+                case 3: 
+                    double totalfolha= 0; //variavel responsavel por somar salarios
                     System.out.println("FOLHA DE PAGAMENTO"); //exibe folha de pagamento
                     for(Colaborador c : colaboradores) { //percorre todos os colaboradores
                         double salarioFinal = c.calcularSalario(); //chama o calculo de salario certo pra cada colaborador 
                         System.out.printf( "%s | %s | %s | R$ %.2f%n", //mostra os dados do colaborador
-                        c.getMatricula(), c.getNome(), c.getTipo(), salarioFinal);                        
+                        c.getMatricula(), c.getNome(), c.getTipo(), salarioFinal);
                         totalfolha += salarioFinal;
                     }
                 break;
