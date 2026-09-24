@@ -16,7 +16,12 @@ abstract class Colaborador {
    this.nome = nome;
    this.salarioBase = salarioBase;
    }
-
+   public void setNome(String nome) {
+       this.nome= nome;
+   }
+   public void setSalarioBase(double salariobase) {
+       this.salarioBase = salariobase;
+   }
    //método abstrato, cada classe filha irá ter que criar seu próprio calcular salario
    public abstract double calcularSalario();
 //retorna a matrícula
@@ -99,6 +104,8 @@ public class Main{
             System.out.println("2 - Listar Colaboradores");
             System.out.println("3 - Gerar folha de pagamento");
             System.out.println("4 - Resumo da folha de pagamento");
+            System.out.println("5 - Excluir Colaborador");
+            System.out.println("6 - Alterar Colaborador");
             System.out.println("0 - Sair");
             System.out.println("Insira um número: ");
             opcao = sc.nextInt();
@@ -114,8 +121,26 @@ public class Main{
                     String matricula = sc.nextLine();
                     System.out.println("Nome: ");
                     String nome= sc.nextLine();
+                    if(nome.isEmpty()) {
+                        System.out.println("Nome é Obrigatório");
+                        break;
+                    }
                     System.out.println("Salário Base: ");
                     double salariobase= sc.nextDouble();
+                    if(salariobase < 0 ) {
+                        System.out.println("Sálario nao pode ser negativo!");
+                        break;
+                    }
+                    boolean existe = false;
+                    for(Colaborador c : colaboradores) {
+                        if(c.getMatricula().equals(matricula)) {
+                            existe=true;
+                            break;
+                        }
+                    }
+                    if(existe) {
+                        System.out.println("Matricula já existe");
+                    }
                     if(tipo == 1) {
                         colaboradores.add(new Colaboradorpadrao(matricula, nome, salariobase));
                         System.out.println("Cadastrado!");
@@ -123,16 +148,32 @@ public class Main{
                     else if(tipo == 2) {
                         System.out.println("Valor das Vendas: ");
                         double vendas = sc.nextDouble();
+                        if(vendas < 0 ) {
+                            System.out.println("Valor de Vendas Inválido!");
+                            break;
+                        }
                         System.out.println("Percentual de Comissao: ");
                         double comissao= sc.nextDouble();
+                        if(comissao < 0) {
+                            System.out.println("Percentual de Comissao Inválido!");
+                            break;
+                        }
                         colaboradores.add(new Colaboradorcomissionado(matricula, nome, salariobase, vendas, comissao));
                         System.out.println("Cadastrado!");
                     }
                     else if(tipo == 3) {
                         System.out.println("Quantidade Produzida: ");
                         int quantidade = sc.nextInt();
+                        if(quantidade < 0 ) {
+                            System.out.println("Quantidade Produzida Inválida!");
+                            break;
+                        }
                         System.out.println("Valor por Unidade: ");
                         double valor = sc.nextDouble();
+                        if(valor < 0 ) {
+                            System.out.println("Valor por Unidade Inválida!");
+                            break;
+                        }
                         colaboradores.add(new Colaboradorproducao(matricula, nome, salariobase, quantidade, valor));
                         System.out.println("Cadastrado!");
                     }
@@ -141,10 +182,10 @@ public class Main{
                     }
                     break;
                 case 2: System.out.println("Colaboradores Registrados");
-                for(Colaborador c : colaboradores) {
-                System.out.println(c.getMatricula() + " | " + c.getNome()+ " | " + c.getTipo());
-                   }
-                    break;
+                    for(Colaborador c : colaboradores) {
+                    System.out.println(c.getMatricula() + " | " + c.getNome()+ " | " + c.getTipo());
+                       }
+                        break;
                 case 3: 
                     double totalfolha= 0; //variavel responsavel por somar salarios
                     System.out.println("FOLHA DE PAGAMENTO"); //exibe folha de pagamento
@@ -154,6 +195,7 @@ public class Main{
                         c.getMatricula(), c.getNome(), c.getTipo(), salarioFinal);
                         totalfolha += salarioFinal;
                     }
+                    System.out.printf("TOTAL DA FOLHA: R$ %.2f%n", totalfolha);
                 break;
                 case 4: double total = 0;
                     for(Colaborador c : colaboradores) {
@@ -161,6 +203,44 @@ public class Main{
                     }
                     System.out.println("Quantidade de Colaboradores: " + colaboradores.size());
                     System.out.printf("Total da Folha: R$ %.2f%n", total);
+                    break;
+                case 5:
+                    sc.nextLine();
+                    System.out.println("Digite a Matrícula para ser excluída");
+                    String Excluir = sc.nextLine();
+                    boolean remover = false;
+                    for(int i = 0; i < colaboradores.size(); i++) {
+                        if(colaboradores.get(i).getMatricula().equals(Excluir)) {
+                            colaboradores.remove(i);
+                            remover = true;
+                            System.out.println("Colaborador Removido!");
+                            break;
+                        }
+                    }
+                    if(!remover) {
+                        System.out.println("Matrícula nao Registrada");
+                    }break;
+                case 6: 
+                    sc.nextLine();
+                    System.out.println("Informe a Matrícula: ");
+                    String Alterar = sc.nextLine();
+                    boolean encontrado = false;
+                    for(Colaborador c : colaboradores) {
+                        if(c.getMatricula().equals(Alterar)) {
+                            System.out.println("Novo Nome: ");
+                            String novonome= sc.nextLine();
+                            System.out.println("Novo Salário: ");
+                            double novosalario= sc.nextDouble();
+                            c.setNome(novonome);
+                            c.setSalarioBase(novosalario);
+                            encontrado = true;
+                            System.out.println("Alterado com Sucesso!");
+                            break;
+                        }
+                    }
+                    if(!encontrado) {
+                        System.out.println("Colaborador nao Encontrado!");
+                    }
                     break;
                 case 0: System.out.println("Encerrando");
                 default: System.out.println("INVÁLIDO");
