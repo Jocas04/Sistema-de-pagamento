@@ -140,6 +140,7 @@ public class Main{
                     }
                     if(existe) {
                         System.out.println("Matricula já existe");
+                        break;
                     }
                     if(tipo == 1) {
                         colaboradores.add(new Colaboradorpadrao(matricula, nome, salariobase));
